@@ -6,11 +6,20 @@ export default function RecipeDetailMenuButton() {
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget);
   }
 
   const handleClose = () => {
     setAnchorEl(null);
+  }
+
+  const displayEditForm = () => {
+    setAnchorEl(null);
+    console.log("edit form");
+  }
+
+  const displayShareForm = () => {
+    setAnchorEl(null);
+    console.log("share form");
   }
 
   return (
@@ -27,8 +36,8 @@ export default function RecipeDetailMenuButton() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem >Edit Recipe</MenuItem>
-        <MenuItem >Share with Friend</MenuItem>
+        <MenuItem onClick={displayEditForm}>Edit Recipe</MenuItem>
+        <MenuItem onClick={displayShareForm}>Share with Friend</MenuItem>
       </Menu>
     </>
   )

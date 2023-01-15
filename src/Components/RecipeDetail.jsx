@@ -17,6 +17,10 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
     setCurrentRecipe(recipe);
   }, [recipe.id])
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
 
   return (
     <>
