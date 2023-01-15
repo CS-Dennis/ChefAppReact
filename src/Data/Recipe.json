@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "recipeName": "Brioche French Toast",
+      "image": "https://insanelygoodrecipes.com/wp-content/uploads/2021/12/French-Toast-with-Fresh-Blueberries-and-Strawberries-768x1152.webp",
+      "information": {
+        "servings": 4,
+        "prepTime": 15,
+        "cookingTime": 20,
+        "calories": 732
+      },
+      "ingredients": [
+        "1 1/2 cups milk",
+        "4 eggs",
+        "1 teaspoon vanilla extract",
+        "1/2 teaspoon cinnamon",
+        "A pinch of salt",
+        "1 tablespoon butter for pan-frying the bread (add more if needed)",
+        "6 slices of dry brioche bread, sliced an inch thick",
+        "1/4 cup butter",
+        "6 tablespoons maple syrup (add more if preferred)"
+      ],
+      "directions": [
+        "Preheat your oven to 350 degrees Fahrenheit.",
+        "In a bowl, whisk milk, eggs, vanilla extract, sugar, nutmeg, and salt.",
+        "Heat a skillet over medium heat. Add 1 ½ teaspoons of butter and wait until hot and melted.",
+        "While waiting, dip the brioche slices in the custard mixture.",
+        "Place the bread into the skillet and cook each side for 2 to 3 minutes or until golden. You may add more butter if needed.",
+        "Transfer the cooked toast onto a baking sheet.",
+        "Bake the toast for 8 to 10 minutes.",
+        "While waiting, add ¼ cup of butter in a skillet over medium-low heat. Stir for 3 to 5 minutes or until it browns.",
+        "Pour the browned butter all over the baked toast and top with maple syrup."
+      ],
+      "video": "https://www.youtube.com/watch?v=-2AtVyarlIg&list=PLGk8mxuDA9oyRjSv3qQWUNbJPnC3sXhYI&index=5",
+      "rating": 4
+    }
+  ]
+}
