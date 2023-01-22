@@ -6,7 +6,7 @@ export default function SectionTitleComponent({ title = "title" }) {
     <>
       <Box sx={{ display: 'flex' }}>
         <Box className='straightLine'></Box>
-        <Box>{title}</Box>
+        <Box sx={{ width: '120%', textAlign: 'center', fontWeight: '500' }}>{title}</Box>
         <Box className='straightLine'></Box>
       </Box>
     </>
