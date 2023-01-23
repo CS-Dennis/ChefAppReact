@@ -4,9 +4,23 @@ import Home from './Screens/Home';
 import Profile from "./Screens/Profile";
 import { ThemeProvider } from '@emotion/react';
 import { MyTheme } from './MyTheme';
-import SectionTitleComponent from './Components/SectionTitleComponent';
+import NewRecipe from './Screens/NewRecipe';
+import { useEffect } from 'react';
+import NoSleep from 'nosleep.js';
 
 function App() {
+  const noSleep = new NoSleep();
+
+
+  useEffect(() => {
+    document.addEventListener('touchstart', function enableNoSleep() {
+      document.removeEventListener('touchstart', enableNoSleep, false);
+      noSleep.enable();
+    }, false);
+
+  }, [])
+
+
   return (
     <>
       <HashRouter>
@@ -14,7 +28,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='profile' element={<Profile />} />
-            <Route path='addrecipe' element={<SectionTitleComponent />} />
+            <Route path='addrecipe' element={<NewRecipe />} />
           </Routes>
         </ThemeProvider>
       </HashRouter>
