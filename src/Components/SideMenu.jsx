@@ -19,17 +19,21 @@ export default function SideMenu() {
             </IconButton>
           </Box>
           <Box>
-            <Link to={'profile'} style={{ textDecoration: 'none' }}>
+            <Link to={'/profile'} style={{ textDecoration: 'none' }}>
               <IconButton><AccountCircleIcon color='primary' /></IconButton>
             </Link>
           </Box>
 
           <Box>
-            <IconButton><PostAddIcon color='primary' /></IconButton>
+            <Link to={'/addrecipe'}>
+              <IconButton><PostAddIcon color='primary' /></IconButton>
+            </Link>
           </Box>
 
           <Box>
-            <IconButton><ArticleIcon color='primary' /></IconButton>
+            <Link to={'/'}>
+              <IconButton><ArticleIcon color='primary' /></IconButton>
+            </Link>
           </Box>
 
           <Box>
