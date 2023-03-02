@@ -10,14 +10,7 @@ export default function Home() {
   const [recipes, setRecipes] = useState([]);
 
   const getRecipes = () => {
-    let data = [];
-    for (let index = 0; index < 20; index++) {
-      const recipe = JSON.parse(JSON.stringify(Recipes.data[0]));
-      recipe.id = 1 + index;
-      recipe.rating = Math.floor(Math.random() * 5) + 1;
-      data = [...data, ...[recipe]];
-    }
-    setRecipes(data);
+    setRecipes(Recipes.data);
   }
 
   useEffect(() => {
