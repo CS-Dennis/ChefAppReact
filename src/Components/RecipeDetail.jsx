@@ -10,7 +10,7 @@ import RecipeDetailMenuButton from './RecipeDetailMenuButton';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
-  const [currentRecipe, setCurrentRecipe] = useState({});
+  const [currentRecipe, setCurrentRecipe] = useState(recipe);
   const [tabValue, setTabValue] = useState(0);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
           </Box>
         </Grid>
         <Grid item xs={12} sx={{ justifyContent: 'center', display: 'flex' }}>
-          <Box><ImageFrame imageUrl={currentRecipe.image} /></Box>
+          <Box><ImageFrame imageUrl={currentRecipe.images[0] || "https://insanelygoodrecipes.com/wp-content/uploads/2021/12/French-Toast-with-Fresh-Blueberries-and-Strawberries-768x1152.webp"} /></Box>
         </Grid>
 
         <Grid item xs={12} md={3} />

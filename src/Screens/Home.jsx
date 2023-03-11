@@ -14,8 +14,8 @@ export default function Home() {
   const getRecipes = () => {
     getRecipesByUserId(User.id).then(response => {
       console.log(response.data);
-    })
-    setRecipes(Recipes.data);
+      setRecipes(response.data);
+    });
   }
 
   useEffect(() => {

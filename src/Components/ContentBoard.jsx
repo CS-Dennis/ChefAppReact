@@ -74,7 +74,7 @@ export default function ContentBoard({ recipes }) {
               <Grid item xs={12} sm={10} md={8} sx={{ paddingBottom: '10px' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', paddingBottom: '10px' }}>
                   <Paper onClick={() => displayRecipeDetail(recipe)} onMouseEnter={() => changeElevation(index)} onMouseLeave={() => changeElevation(index)} elevation={paperElevation[index]} sx={{ height: '400px', width: 'auto', borderRadius: '15px' }}>
-                    <ImageFrame imageUrl={recipe.image} />
+                    <ImageFrame imageUrl={recipe.images[0] || 'https://insanelygoodrecipes.com/wp-content/uploads/2021/12/French-Toast-with-Fresh-Blueberries-and-Strawberries-768x1152.webp'} />
                   </Paper>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -85,19 +85,19 @@ export default function ContentBoard({ recipes }) {
               <Grid item xs={12} sm={2} md={4} >
                 {/* shown on sm or smaller */}
                 <Stack sx={{ display: { sm: 'block', md: 'none' }, paddingBottom: '10px' }}>
-                  <InformationCard title={'Servings'} data={recipe.information.servings} />
-                  <InformationCard title={'Prep Time'} data={recipe.information.prepTime} />
-                  <InformationCard title={'Cooking Time'} data={recipe.information.cookingTime} />
-                  <InformationCard title={'Calories'} data={recipe.information.calories} />
+                  <InformationCard title={'Servings'} data={recipe.information.servings || ""} />
+                  <InformationCard title={'Prep Time'} data={recipe.information.prepTime || ""} />
+                  <InformationCard title={'Cooking Time'} data={recipe.information.cookingTime || ""} />
+                  <InformationCard title={'Calories'} data={recipe.information.calories || ""} />
                 </Stack>
 
                 {/* shown on md or larger */}
                 <Box sx={{ display: { xs: 'none', md: 'block' } }}>
                   <Stack direction={'row'} sx={{ paddingBottom: '10px' }} >
-                    <InformationCard title={'Servings'} data={recipe.information.servings} />
-                    <InformationCard title={'Prep Time'} data={recipe.information.prepTime} />
-                    <InformationCard title={'Cooking Time'} data={recipe.information.cookingTime} />
-                    <InformationCard title={'Calories'} data={recipe.information.calories} />
+                    <InformationCard title={'Servings'} data={recipe.information.servings || ""} />
+                    <InformationCard title={'Prep Time'} data={recipe.information.prepTime || ""} />
+                    <InformationCard title={'Cooking Time'} data={recipe.information.cookingTime || ""} />
+                    <InformationCard title={'Calories'} data={recipe.information.calories || ""} />
                   </Stack>
 
                   <Box>
