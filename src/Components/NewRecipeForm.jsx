@@ -9,6 +9,7 @@ import SnackbarMessage from './SnackbarMessage';
 import { uploadFile } from '../Services/apis';
 import axios from 'axios';
 import Loading from './Loading';
+import { nginxURL } from '../Services/config';
 
 export default function NewRecipeForm() {
   const [recipeName, setRecipeName] = useState("");
@@ -157,6 +158,23 @@ export default function NewRecipeForm() {
     };
   }
 
+  const uploadTakenPhoto = (file) => {
+    if (file.length === 1) {
+      setHideLoading(false);
+      const photo = new FormData();
+      photo.append("file", file[0]);
+
+      const allFilesNames = [];
+      uploadFile(photo).then(res => {
+        allFilesNames.push(res.data);
+        console.log(res);
+        setImages([...images, ...allFilesNames]);
+        setHideLoading(true);
+      });
+
+    }
+  }
+
   return (
     <>
       <Loading hide={hideLoading} />
@@ -172,7 +190,7 @@ export default function NewRecipeForm() {
             {/* Upload photos */}
             <Box><SectionTitleComponent title='Recipe Photos' /></Box>
             {images.map(image =>
-              <Box key={image} sx={{ display: 'flex', placeContent: 'center' }}><img src={"http://localhost/uploads/" + image} alt={image} width="90%" /></Box>
+              <Box key={image} sx={{ display: 'flex', placeContent: 'center' }}><img src={nginxURL + "/uploads/" + image} alt={image} width="90%" /></Box>
             )}
             <Box sx={{ margin: '10px 0', display: 'flex', placeContent: 'center', width: '100%' }}>
               <IconButton color='primary' component="label">
@@ -181,7 +199,7 @@ export default function NewRecipeForm() {
               </IconButton>
 
               <IconButton color="primary" aria-label="upload picture" component="label">
-                <input hidden accept="image/*" type="file" capture="camera" />
+                <input hidden accept="image/*" type="file" capture="camera" onChange={(e) => uploadTakenPhoto(e.target.files)} />
                 <PhotoCamera />
               </IconButton>
             </Box>
