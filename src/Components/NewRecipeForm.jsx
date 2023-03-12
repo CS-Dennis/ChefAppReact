@@ -8,6 +8,7 @@ import { trimString } from '../Utils/utils';
 import SnackbarMessage from './SnackbarMessage';
 import { uploadFile } from '../Services/apis';
 import axios from 'axios';
+import Loading from './Loading';
 
 export default function NewRecipeForm() {
   const [recipeName, setRecipeName] = useState("");
@@ -23,6 +24,9 @@ export default function NewRecipeForm() {
 
   const [ingredients, setIngredients] = useState([""]);
   const [hideNewIngredientInput, setHideNewIngredientInput] = useState(false);
+
+  const [hideLoading, setHideLoading] = useState(true);
+
   const updateIngredients = (index, ingredient) => {
     ingredients[index] = ingredient;
     setIngredients([...ingredients]);
@@ -131,6 +135,8 @@ export default function NewRecipeForm() {
       const selectedFilesFormData = [];
       const uploadFilesPromises = [];
 
+      setHideLoading(false);
+
       Array.from(files).forEach(() => {
         selectedFilesFormData.push(new FormData());
       });
@@ -146,12 +152,14 @@ export default function NewRecipeForm() {
           allFilesNames.push(uploadedFile.data);
         });
         setImages([...images, ...allFilesNames]);
+        setHideLoading(true)
       });
     };
   }
 
   return (
     <>
+      <Loading hide={hideLoading} />
       <Grid container>
         <Grid item xs={12} sm={2} md={3} />
         <Grid item xs={12} sm={8} md={6} >
