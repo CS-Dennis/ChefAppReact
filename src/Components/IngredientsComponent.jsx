@@ -4,20 +4,6 @@ import React, { useEffect, useState } from 'react'
 export default function IngredientsComponent({ ingredients }) {
   const [ingredientsList, setIngredientsList] = useState(ingredients);
 
-  // useEffect(() => {
-  //   if (ingredients !== undefined) {
-  //     setIngredientsList([...ingredients]);
-  //     setIngredientsList([3, 2, 1]);
-  //     console.log(ingredients);
-  //   }
-
-  // }, [])
-
-  useEffect(() => {
-    console.log(ingredientsList);
-  }, [])
-
-
   return (
     <>
       <Box sx={{ backgroundColor: '#edf2f4' }}>

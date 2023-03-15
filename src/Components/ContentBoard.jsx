@@ -1,6 +1,7 @@
 import { Grid, Paper, Stack } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
+import { nginxURL } from '../Services/config'
 import ImageFrame from './ImageFrame'
 import InformationCard from './InformationCard'
 import IngredientsComponent from './IngredientsComponent'
@@ -74,7 +75,12 @@ export default function ContentBoard({ recipes }) {
               <Grid item xs={12} sm={10} md={8} sx={{ paddingBottom: '10px' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', paddingBottom: '10px' }}>
                   <Paper onClick={() => displayRecipeDetail(recipe)} onMouseEnter={() => changeElevation(index)} onMouseLeave={() => changeElevation(index)} elevation={paperElevation[index]} sx={{ height: '400px', width: 'auto', borderRadius: '15px' }}>
-                    <ImageFrame imageUrl={recipe.images[0] || 'https://insanelygoodrecipes.com/wp-content/uploads/2021/12/French-Toast-with-Fresh-Blueberries-and-Strawberries-768x1152.webp'} />
+                    {recipe.images.length > 0 ?
+                      <ImageFrame imageUrl={nginxURL + recipe.images[0].url} />
+                      :
+                      <ImageFrame imageUrl={'https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71wm9Cq8bsL.jpg'} />
+                    }
+
                   </Paper>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>

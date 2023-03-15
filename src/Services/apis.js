@@ -14,3 +14,7 @@ export const uploadFile = (file) => {
     headers: { "Content-Type": "multipart/form-data" }
   });
 }
+
+export const createRecipe = (recipe) => {
+  return axios.post(serverURL + "/api/recipes/create", recipe);
+}

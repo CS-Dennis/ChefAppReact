@@ -8,6 +8,7 @@ import InformationCard from './InformationCard';
 import IngredientsComponent from './IngredientsComponent';
 import RecipeDetailMenuButton from './RecipeDetailMenuButton';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { nginxURL } from '../Services/config';
 
 export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
   const [currentRecipe, setCurrentRecipe] = useState(recipe);
@@ -39,7 +40,15 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
           </Box>
         </Grid>
         <Grid item xs={12} sx={{ justifyContent: 'center', display: 'flex' }}>
-          <Box><ImageFrame imageUrl={currentRecipe.images[0] || "https://insanelygoodrecipes.com/wp-content/uploads/2021/12/French-Toast-with-Fresh-Blueberries-and-Strawberries-768x1152.webp"} /></Box>
+          <Box sx={{ display: 'flex', overflowX: 'auto' }}>{
+            currentRecipe.images.length > 0
+              ? currentRecipe.images.map(image =>
+                <Box sx={{ margin: "5px 10px" }}>
+                  <ImageFrame imageUrl={nginxURL + image.url} />
+                </Box>
+              )
+              : <ImageFrame imageUrl={"https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/71wm9Cq8bsL.jpg"} />
+          }</Box>
         </Grid>
 
         <Grid item xs={12} md={3} />
