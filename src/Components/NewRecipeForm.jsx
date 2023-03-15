@@ -11,6 +11,7 @@ import axios from 'axios';
 import Loading from './Loading';
 import { nginxURL } from '../Services/config';
 import MockUser from '../Data/UserConfig.json';
+import Compressor from 'compressorjs';
 
 export default function NewRecipeForm() {
   const [recipeName, setRecipeName] = useState("");
@@ -147,20 +148,54 @@ export default function NewRecipeForm() {
     };
   }
 
+  function compressImage(image, quality) {
+    new Compressor(image, {
+      quality: quality,
+      success(compressedImage) {
+        if (compressedImage.size / 1024 > 2048) {
+
+          console.log(compressedImage.size / 1024);
+          const newQual = quality - 0.5 > 0 ? quality - 0.5 : 0.1;
+          compressImage(image, newQual);
+        } else if (compressedImage.size / 1024 < 1024) {
+          const newQual = quality + 0.1;
+          compressImage(image, newQual);
+        } else {
+          const photo = new FormData();
+          photo.append("file", compressedImage);
+          const allFilesNames = [];
+          uploadFile(photo).then(res => {
+            allFilesNames.push(res.data);
+            setImages([...images, ...allFilesNames]);
+            setHideLoading(true);
+          });
+        }
+      }
+    })
+
+  }
+
+
   const uploadTakenPhoto = (file) => {
     if (file.length === 1) {
       setHideLoading(false);
-      const photo = new FormData();
-      photo.append("file", file[0]);
 
-      const allFilesNames = [];
-      uploadFile(photo).then(res => {
-        allFilesNames.push(res.data);
-        console.log(res);
-        setImages([...images, ...allFilesNames]);
-        setHideLoading(true);
-      });
+      let rawImage = file[0];
+      let compressedImage = rawImage;
+      console.log(rawImage.size / 1024);
+      if (rawImage.size / 1024 > 2048) {
+        compressImage(rawImage, 0.9);
+      } else {
+        const photo = new FormData();
+        photo.append("file", compressedImage);
 
+        const allFilesNames = [];
+        uploadFile(photo).then(res => {
+          allFilesNames.push(res.data);
+          setImages([...images, ...allFilesNames]);
+          setHideLoading(true);
+        });
+      }
     }
   }
 
