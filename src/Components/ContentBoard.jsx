@@ -74,7 +74,7 @@ export default function ContentBoard({ recipes }) {
 
               <Grid item xs={12} sm={10} md={8} sx={{ paddingBottom: '10px' }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', paddingBottom: '10px' }}>
-                  <Paper onClick={() => displayRecipeDetail(recipe)} onMouseEnter={() => changeElevation(index)} onMouseLeave={() => changeElevation(index)} elevation={paperElevation[index]} sx={{ height: '400px', width: 'auto', borderRadius: '15px' }}>
+                  <Paper onClick={() => displayRecipeDetail(recipe)} onMouseEnter={() => changeElevation(index)} onMouseLeave={() => changeElevation(index)} elevation={paperElevation[index]} sx={{ maxHeight: '400px', width: 'auto', borderRadius: '15px' }}>
                     {recipe.images.length > 0 ?
                       <ImageFrame imageUrl={nginxURL + recipe.images[0].url} />
                       :
