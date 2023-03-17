@@ -2,7 +2,7 @@ import { Button, IconButton, Menu, MenuItem } from '@mui/material'
 import React, { useState } from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-export default function RecipeDetailMenuButton() {
+export default function RecipeDetailMenuButton({ setShowDeleteRecipeDialog }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,6 +22,13 @@ export default function RecipeDetailMenuButton() {
     console.log("share form");
   }
 
+  const displayDeleteForm = () => {
+    setAnchorEl(null);
+    setShowDeleteRecipeDialog(true);
+    console.log("delete form");
+  }
+
+
   return (
     <>
       <IconButton onClick={(event) => handleClick(event)}>
@@ -36,8 +43,9 @@ export default function RecipeDetailMenuButton() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={displayEditForm}>Edit Recipe</MenuItem>
-        <MenuItem onClick={displayShareForm}>Share with Friend</MenuItem>
+        <MenuItem onClick={displayEditForm}>Edit</MenuItem>
+        <MenuItem onClick={displayShareForm} disabled>Share</MenuItem>
+        <MenuItem onClick={displayDeleteForm} sx={{ color: 'red' }}>Delete</MenuItem>
       </Menu>
     </>
   )

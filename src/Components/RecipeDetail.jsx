@@ -9,10 +9,14 @@ import IngredientsComponent from './IngredientsComponent';
 import RecipeDetailMenuButton from './RecipeDetailMenuButton';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { nginxURL } from '../Services/config';
+import DeleteRecipeDialog from './Dialogs/DeleteRecipeDialog';
 
 export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
   const [currentRecipe, setCurrentRecipe] = useState(recipe);
   const [tabValue, setTabValue] = useState(0);
+
+  // delete dialog vars
+  const [showDeleteRecipeDialog, setShowDeleteRecipeDialog] = useState(false);
 
   useEffect(() => {
     setCurrentRecipe(recipe);
@@ -22,14 +26,17 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
     window.scrollTo(0, 0);
   }, [])
 
-
   return (
     <>
       <Grid container sx={{ backgroundColor: "#fff" }}>
         <Grid item xs={12} md={3} />
         <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
           <IconButton onClick={() => setDisplayContentBoard(true)} variant="contained" sx={{ margin: '10px' }}><KeyboardBackspaceIcon /></IconButton>
-          <Box sx={{ display: 'flex', justifyContent: 'end', flex: 1 }}><Box sx={{ alignSelf: 'center', margin: '10px' }}><RecipeDetailMenuButton /></Box></Box>
+          <Box sx={{ display: 'flex', justifyContent: 'end', flex: 1 }}>
+            <Box sx={{ alignSelf: 'center', margin: '10px' }}>
+              <RecipeDetailMenuButton setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} />
+            </Box>
+          </Box>
         </Grid>
         <Grid item xs={12} md={3} />
 
@@ -79,6 +86,8 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
         </Grid>
         <Grid item xs={12} md={3} />
       </Grid>
+
+      <DeleteRecipeDialog showDeleteRecipeDialog={showDeleteRecipeDialog} setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} />
     </>
   )
 }
