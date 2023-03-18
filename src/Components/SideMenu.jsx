@@ -19,7 +19,7 @@ export default function SideMenu() {
 
   return (
     <>
-      <Box>
+      <Box sx={{ position: 'fixed', left: '0', top: '0' }}>
         <Stack direction={'column'}>
           <Box>
             <IconButton onClick={() => toggleDrawer(true)}>
