@@ -47,3 +47,7 @@ body {
   align-self: center;
   color: #2b2d42
 }
+
+.inputField {
+  margin: 10px 0;
+}
