@@ -49,8 +49,10 @@ export default function NewRecipeForm() {
     console.log(ingredients.length);
     // focuse on the last text field
     setTimeout(() => {
+      // document.getElementById('ingredient' + (ingredients.length)).focus();
+      document.getElementById('ingredient' + (ingredients.length)).blur();
       document.getElementById('ingredient' + (ingredients.length)).focus();
-    }, 100);
+    }, 1000);
 
     // hide ifself
     setHideNewIngredientInput(true);
@@ -257,7 +259,7 @@ export default function NewRecipeForm() {
           <Paper elevation={3} sx={{ padding: '20px' }}>
             {/* Recipe Name */}
             <Box><SectionTitleComponent title='Create A New Recipe' /></Box>
-            <Box sx={{ margin: '10px 0' }}><TextField required label='Recipe Name' variant='outlined' color='primary' value={recipeName} onChange={(e) => setRecipeName(e.target.value)} onBlur={() => setRecipeName(trimString(recipeName))} sx={{ width: '100%' }} /></Box>
+            <Box className="inputField"><TextField required label='Recipe Name' variant='outlined' color='primary' value={recipeName} onChange={(e) => setRecipeName(e.target.value)} onBlur={() => setRecipeName(trimString(recipeName))} sx={{ width: '100%' }} /></Box>
 
             {/* Upload photos */}
             <Box><SectionTitleComponent title='Recipe Photos' /></Box>
@@ -277,28 +279,28 @@ export default function NewRecipeForm() {
             </Box>
 
             <Box><SectionTitleComponent title='Recipe Information' /></Box>
-            <Box sx={{ margin: '10px 0' }}><TextField label='Servings (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.servings} onChange={(e) => setRecipeInformation({ ...recipeInformation, servings: e.target.value })} sx={{ width: '100%' }} /></Box>
-            <Box sx={{ margin: '10px 0' }}><TextField label='Prep Time (min) (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.prepTime} onChange={(e) => setRecipeInformation({ ...recipeInformation, prepTime: e.target.value })} sx={{ width: '100%' }} /></Box>
-            <Box sx={{ margin: '10px 0' }}><TextField label='Cooking Time (min) (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.cookingTime} onChange={(e) => setRecipeInformation({ ...recipeInformation, cookingTime: e.target.value })} sx={{ width: '100%' }} /></Box>
-            <Box sx={{ margin: '10px 0' }}><TextField label='Calories (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.calories} onChange={(e) => setRecipeInformation({ ...recipeInformation, calories: e.target.value })} sx={{ width: '100%' }} /></Box>
+            <Box className="inputField"><TextField label='Servings (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.servings} onChange={(e) => setRecipeInformation({ ...recipeInformation, servings: e.target.value })} sx={{ width: '100%' }} /></Box>
+            <Box className="inputField"><TextField label='Prep Time (min) (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.prepTime} onChange={(e) => setRecipeInformation({ ...recipeInformation, prepTime: e.target.value })} sx={{ width: '100%' }} /></Box>
+            <Box className="inputField"><TextField label='Cooking Time (min) (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.cookingTime} onChange={(e) => setRecipeInformation({ ...recipeInformation, cookingTime: e.target.value })} sx={{ width: '100%' }} /></Box>
+            <Box className="inputField"><TextField label='Calories (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.calories} onChange={(e) => setRecipeInformation({ ...recipeInformation, calories: e.target.value })} sx={{ width: '100%' }} /></Box>
 
             <Box><SectionTitleComponent title='Ingredients' /></Box>
             {ingredients.length > 0 && ingredients.map((ingredient, index) =>
-              <Box key={index} sx={{ margin: '10px 0' }}>
+              <Box key={index} className="inputField">
                 {index === 0 ? <TextField required id={'ingredient' + index} onChange={(e) => { updateIngredients(index, e.target.value) }} onBlur={removeEmptyIngredientInput} label={'Ingredient ' + (index + 1)} variant='outlined' color='primary' value={ingredients[index]} sx={{ width: '100%' }} /> :
                   <TextField id={'ingredient' + index} onChange={(e) => { updateIngredients(index, e.target.value) }} onBlur={removeEmptyIngredientInput} label={'Ingredient ' + (index + 1)} variant='outlined' color='primary' value={ingredients[index]} sx={{ width: '100%' }} />}
               </Box>
             )}
-            {!hideNewIngredientInput && <Box sx={{ margin: '10px 0' }}><TextField onClick={addIngredientInput} label='New Ingredient' variant='outlined' color='primary' value={''} sx={{ width: '100%' }} /></Box>}
+            {!hideNewIngredientInput && <Box className="inputField"><TextField onClick={addIngredientInput} label='New Ingredient' variant='outlined' color='primary' value={''} sx={{ width: '100%' }} /></Box>}
 
             <Box><SectionTitleComponent title='Directions' /></Box>
             {directions.length > 0 && directions.map((direction, index) =>
-              <Box key={index} sx={{ margin: '10px 0' }}>
+              <Box key={index} className="inputField">
                 {index === 0 ? <TextField required id={'direction' + index} onChange={(e) => { updateDirections(index, e.target.value) }} onBlur={removeEmptyDirectionInput} label={'Direction ' + (index + 1)} variant='outlined' color='primary' value={directions[index]} sx={{ width: '100%' }} /> :
                   <TextField id={'direction' + index} onChange={(e) => { updateDirections(index, e.target.value) }} onBlur={removeEmptyDirectionInput} label={'Direction ' + (index + 1)} variant='outlined' color='primary' value={directions[index]} sx={{ width: '100%' }} />}
               </Box>
             )}
-            {!hideNewDirectionInput && <Box sx={{ margin: '10px 0' }}><TextField onClick={addDirectionInput} label='New Direction' variant='outlined' color='primary' value={''} sx={{ width: '100%' }} /></Box>}
+            {!hideNewDirectionInput && <Box className="inputField"><TextField onClick={addDirectionInput} label='New Direction' variant='outlined' color='primary' value={''} sx={{ width: '100%' }} /></Box>}
 
             <Box><Button variant='contained' onClick={submitRecipe}>Create</Button></Box>
           </Paper>
