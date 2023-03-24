@@ -66,7 +66,7 @@ export default function ContentBoard({ recipes }) {
           <Paper key={index} elevation={2} sx={{ padding: '10px 20px', margin: '10px 0' }}>
             <Grid container sx={{ padding: '10px 0px' }}>
               <Grid item xs={12} sx={{ justifyContent: 'center', display: 'flex' }} >
-                <Box>
+                <Box onClick={() => displayRecipeDetail(recipe)} sx={{ cursor: 'pointer' }}>
                   <Box className="recipeName">{recipe.recipeName}</Box>
                   <Box sx={{ height: '5px', width: '100%', backgroundColor: '#d90429', borderRadius: '5px', marginBottom: '10px' }}></Box>
                 </Box>
