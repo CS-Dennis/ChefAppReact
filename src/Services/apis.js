@@ -18,3 +18,7 @@ export const uploadFile = (file) => {
 export const createRecipe = (recipe) => {
   return axios.post(serverURL + "/api/recipes/create", recipe);
 }
+
+export const deleteRecipe = ({ recipeId }) => {
+  return axios.post(serverURL + "/api/recipes/delete", { recipeId });
+}
