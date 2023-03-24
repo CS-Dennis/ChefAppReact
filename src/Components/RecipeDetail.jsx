@@ -93,7 +93,7 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
 
       {/* All dialogs for the menu button */}
       <EditRecipeDialog showEditRecipeDialog={showEditRecipeDialog} setShowEditRecipeDialog={setShowEditRecipeDialog} currentRecipe={currentRecipe} />
-      <DeleteRecipeDialog showDeleteRecipeDialog={showDeleteRecipeDialog} setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} />
+      <DeleteRecipeDialog showDeleteRecipeDialog={showDeleteRecipeDialog} setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} recipeId={currentRecipe.recipeId} setDisplayContentBoard={setDisplayContentBoard} />
     </>
   )
 }

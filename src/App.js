@@ -5,12 +5,15 @@ import Profile from "./Screens/Profile";
 import { ThemeProvider } from '@emotion/react';
 import { MyTheme } from './MyTheme';
 import NewRecipe from './Screens/NewRecipe';
-import { useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import NoSleep from 'nosleep.js';
+
+export const AppContext = createContext(null);
 
 function App() {
   const noSleep = new NoSleep();
 
+  const [getRecipesFlag, setGetRecipesFlag] = useState(true);
 
   useEffect(() => {
     document.addEventListener('touchstart', function enableNoSleep() {
@@ -20,18 +23,19 @@ function App() {
 
   }, [])
 
-
   return (
     <>
-      <HashRouter>
-        <ThemeProvider theme={MyTheme}>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='addrecipe' element={<NewRecipe />} />
-          </Routes>
-        </ThemeProvider>
-      </HashRouter>
+      <AppContext.Provider value={{ getRecipesFlag: getRecipesFlag, setGetRecipesFlag: setGetRecipesFlag }}>
+        <HashRouter>
+          <ThemeProvider theme={MyTheme}>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='profile' element={<Profile />} />
+              <Route path='addrecipe' element={<NewRecipe />} />
+            </Routes>
+          </ThemeProvider>
+        </HashRouter>
+      </AppContext.Provider>
     </>
   );
 }
