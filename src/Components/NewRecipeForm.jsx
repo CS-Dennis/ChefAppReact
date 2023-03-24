@@ -1,6 +1,6 @@
 import { PhotoCamera } from '@mui/icons-material';
 import { Box, Button, Grid, IconButton, Paper, TextField } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
 import SectionTitleComponent from './SectionTitleComponent'
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -12,8 +12,13 @@ import Loading from './Loading';
 import { nginxURL } from '../Services/config';
 import MockUser from '../Data/UserConfig.json';
 import Compressor from 'compressorjs';
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../App';
 
 export default function NewRecipeForm() {
+  const navigate = useNavigate();
+  const { setGetRecipesFlag } = useContext(AppContext);
+
   const [recipeName, setRecipeName] = useState("");
 
   const initRecipeInformation = {
@@ -238,6 +243,10 @@ export default function NewRecipeForm() {
         if (res.status === 200 && res.data !== null) {
           setSnackbarSettings({ ...snackbarSettings, open: true, type: 'success', message: "Recipe created successfully!" });
           // redirect to the recipedetail
+          setTimeout(() => {
+            setGetRecipesFlag(true);
+            navigate("/");
+          }, 1000);
         } else {
           setSnackbarSettings({ ...snackbarSettings, open: true, type: 'error', message: "You can only upload 5 photos maximum at a time." });
         }
