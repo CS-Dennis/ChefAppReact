@@ -10,6 +10,7 @@ import RecipeDetailMenuButton from './RecipeDetailMenuButton';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { nginxURL } from '../Services/config';
 import DeleteRecipeDialog from './Dialogs/DeleteRecipeDialog';
+import EditRecipeDialog from './Dialogs/EditRecipeDialog';
 
 export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
   const [currentRecipe, setCurrentRecipe] = useState(recipe);
@@ -17,6 +18,9 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
 
   // delete dialog vars
   const [showDeleteRecipeDialog, setShowDeleteRecipeDialog] = useState(false);
+
+  // edit dialog vars
+  const [showEditRecipeDialog, setShowEditRecipeDialog] = useState(false);
 
   useEffect(() => {
     setCurrentRecipe(recipe);
@@ -34,7 +38,7 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
           <IconButton onClick={() => setDisplayContentBoard(true)} variant="contained" sx={{ margin: '10px' }}><KeyboardBackspaceIcon /></IconButton>
           <Box sx={{ display: 'flex', justifyContent: 'end', flex: 1 }}>
             <Box sx={{ alignSelf: 'center', margin: '10px' }}>
-              <RecipeDetailMenuButton setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} />
+              <RecipeDetailMenuButton setShowEditRecipeDialog={setShowEditRecipeDialog} setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} />
             </Box>
           </Box>
         </Grid>
@@ -50,7 +54,7 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
           <Box sx={{ display: 'flex', overflowX: 'auto' }}>{
             currentRecipe.images.length > 0
               ? currentRecipe.images.map(image =>
-                <Box sx={{ margin: "5px 10px" }}>
+                <Box key={image.url} sx={{ margin: "5px 10px" }}>
                   <ImageFrame imageUrl={nginxURL + image.url} />
                 </Box>
               )
@@ -87,6 +91,8 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
         <Grid item xs={12} md={3} />
       </Grid>
 
+      {/* All dialogs for the menu button */}
+      <EditRecipeDialog showEditRecipeDialog={showEditRecipeDialog} setShowEditRecipeDialog={setShowEditRecipeDialog} currentRecipe={currentRecipe} />
       <DeleteRecipeDialog showDeleteRecipeDialog={showDeleteRecipeDialog} setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} />
     </>
   )
