@@ -49,10 +49,8 @@ export default function NewRecipeForm() {
     console.log(ingredients.length);
     // focuse on the last text field
     setTimeout(() => {
-      // document.getElementById('ingredient' + (ingredients.length)).focus();
-      document.getElementById('ingredient' + (ingredients.length)).blur();
       document.getElementById('ingredient' + (ingredients.length)).focus();
-    }, 1000);
+    }, 100);
 
     // hide ifself
     setHideNewIngredientInput(true);
