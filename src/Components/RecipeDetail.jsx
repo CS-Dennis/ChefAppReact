@@ -1,5 +1,5 @@
 // import { TabPanel } from '@mui/lab';
-import { Box, Button, Grid, IconButton, Tab, Tabs } from '@mui/material';
+import { Box, Grid, IconButton, Tab, Tabs } from '@mui/material';
 import { Stack } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import DirectionsComponent from './DirectionsComponent';
@@ -24,6 +24,7 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
 
   useEffect(() => {
     setCurrentRecipe(recipe);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipe.id])
 
   useEffect(() => {

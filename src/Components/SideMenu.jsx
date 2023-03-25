@@ -1,6 +1,6 @@
 import { Drawer, IconButton, Stack } from '@mui/material'
 import { Box } from '@mui/system'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -9,9 +9,11 @@ import ArticleIcon from '@mui/icons-material/Article';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import Logo from './Logo';
+import { AppContext } from '../App';
 
 export default function SideMenu() {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const { getRecipesFlag, setGetRecipesFlag } = useContext(AppContext);
 
   const toggleDrawer = (status) => {
     setDrawerIsOpen(status);
@@ -39,7 +41,7 @@ export default function SideMenu() {
           </Box>
 
           <Box>
-            <Link to={'/'}>
+            <Link to={'/'} onClick={() => setGetRecipesFlag(true)}>
               <IconButton><ArticleIcon color='primary' /></IconButton>
             </Link>
           </Box>
