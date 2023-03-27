@@ -4,7 +4,6 @@ import React, { useContext } from 'react'
 import { useState } from 'react'
 import SectionTitleComponent from './SectionTitleComponent'
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { trimString } from '../Utils/utils';
 import SnackbarMessage from './SnackbarMessage';
 import { createRecipe, uploadFile } from '../Services/apis';
 import axios from 'axios';
@@ -51,7 +50,6 @@ export default function NewRecipeForm() {
     // add a new element in the list
     setIngredients([...ingredients, ""]);
 
-    console.log(ingredients.length);
     // focuse on the last text field
     setTimeout(() => {
       document.getElementById('ingredient' + (ingredients.length)).focus();
@@ -68,16 +66,12 @@ export default function NewRecipeForm() {
       setIngredients([...ingredients]);
       setHideNewIngredientInput(false);
     }
-
-    console.log(numsOfIngredients);
   }
 
   const [directions, setDirections] = useState([]);
   const [hideNewDirectionInput, setHideNewDirectionInput] = useState(false);
 
   const updateDirections = (index, direction) => {
-    console.log(direction);
-    console.log(index);
     directions[index] = direction;
     setDirections([...directions]);
 
@@ -158,8 +152,6 @@ export default function NewRecipeForm() {
       quality: quality,
       success(compressedImage) {
         if (compressedImage.size / 1024 > 2048) {
-
-          console.log(compressedImage.size / 1024);
           const newQual = quality - 0.5 > 0 ? quality - 0.5 : 0.1;
           compressImage(image, newQual);
         } else if (compressedImage.size / 1024 < 1024) {
@@ -177,7 +169,6 @@ export default function NewRecipeForm() {
         }
       }
     })
-
   }
 
 
@@ -187,7 +178,6 @@ export default function NewRecipeForm() {
 
       let rawImage = file[0];
       let compressedImage = rawImage;
-      console.log(rawImage.size / 1024);
       if (rawImage.size / 1024 > 2048) {
         compressImage(rawImage, 0.9);
       } else {
@@ -238,7 +228,6 @@ export default function NewRecipeForm() {
         "directions": directionsPayload
       }
 
-      console.log(payload);
       createRecipe(payload).then(res => {
         if (res.status === 200 && res.data !== null) {
           setSnackbarSettings({ ...snackbarSettings, open: true, type: 'success', message: "Recipe created successfully!" });
@@ -266,7 +255,7 @@ export default function NewRecipeForm() {
           <Paper elevation={3} sx={{ padding: '20px' }}>
             {/* Recipe Name */}
             <Box><SectionTitleComponent title='Create A New Recipe' /></Box>
-            <Box className="inputField"><TextField required label='Recipe Name' variant='outlined' color='primary' value={recipeName} onChange={(e) => setRecipeName(e.target.value)} onBlur={() => setRecipeName(trimString(recipeName))} sx={{ width: '100%' }} /></Box>
+            <Box className="inputField"><TextField required label='Recipe Name' variant='outlined' color='primary' value={recipeName} onChange={(e) => setRecipeName(e.target.value)} onBlur={() => setRecipeName(recipeName.trim())} sx={{ width: '100%' }} /></Box>
 
             {/* Upload photos */}
             <Box><SectionTitleComponent title='Recipe Photos' /></Box>

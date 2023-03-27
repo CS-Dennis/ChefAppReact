@@ -15,18 +15,15 @@ export default function RecipeDetailMenuButton({ setShowEditRecipeDialog, setSho
   const displayEditForm = () => {
     setAnchorEl(null);
     setShowEditRecipeDialog(true);
-    console.log("edit form");
   }
 
   const displayShareForm = () => {
     setAnchorEl(null);
-    console.log("share form");
   }
 
   const displayDeleteForm = () => {
     setAnchorEl(null);
     setShowDeleteRecipeDialog(true);
-    console.log("delete form");
   }
 
 

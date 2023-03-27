@@ -14,6 +14,7 @@ function App() {
   const noSleep = new NoSleep();
 
   const [getRecipesFlag, setGetRecipesFlag] = useState(true);
+  const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     document.addEventListener('touchstart', function enableNoSleep() {
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <>
-      <AppContext.Provider value={{ getRecipesFlag: getRecipesFlag, setGetRecipesFlag: setGetRecipesFlag }}>
+      <AppContext.Provider value={{ getRecipesFlag: getRecipesFlag, setGetRecipesFlag: setGetRecipesFlag, recipes: recipes, setRecipes: setRecipes }}>
         <HashRouter>
           <ThemeProvider theme={MyTheme}>
             <Routes>

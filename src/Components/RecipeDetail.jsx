@@ -1,7 +1,7 @@
 // import { TabPanel } from '@mui/lab';
 import { Box, Grid, IconButton, Tab, Tabs } from '@mui/material';
 import { Stack } from '@mui/system';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DirectionsComponent from './DirectionsComponent';
 import ImageFrame from './ImageFrame';
 import InformationCard from './InformationCard';
@@ -11,9 +11,11 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { nginxURL } from '../Services/config';
 import DeleteRecipeDialog from './Dialogs/DeleteRecipeDialog';
 import EditRecipeDialog from './Dialogs/EditRecipeDialog';
+import { AppContext } from '../App';
 
-export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
-  const [currentRecipe, setCurrentRecipe] = useState(recipe);
+export default function RecipeDetail({ recipeIndex, setDisplayContentBoard }) {
+  const { recipes } = useContext(AppContext);
+
   const [tabValue, setTabValue] = useState(0);
 
   // delete dialog vars
@@ -21,11 +23,6 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
 
   // edit dialog vars
   const [showEditRecipeDialog, setShowEditRecipeDialog] = useState(false);
-
-  useEffect(() => {
-    setCurrentRecipe(recipe);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recipe.id])
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -47,14 +44,14 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
 
         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box>
-            <Box className="recipeName">{currentRecipe.recipeName}</Box>
+            <Box className="recipeName">{recipes[recipeIndex].recipeName}</Box>
             <Box sx={{ height: '5px', width: '100%', backgroundColor: '#d90429', borderRadius: '5px', marginBottom: '10px' }}></Box>
           </Box>
         </Grid>
         <Grid item xs={12} sx={{ justifyContent: 'center', display: 'flex' }}>
           <Box sx={{ display: 'flex', overflowX: 'auto' }}>{
-            currentRecipe.images.length > 0
-              ? currentRecipe.images.map(image =>
+            recipes[recipeIndex].images.length > 0
+              ? recipes[recipeIndex].images.map(image =>
                 <Box key={image.url} sx={{ margin: "5px 10px" }}>
                   <ImageFrame imageUrl={nginxURL + image.url} />
                 </Box>
@@ -65,12 +62,12 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
 
         <Grid item xs={12} md={3} />
         <Grid item xs={12} md={6} sx={{ minHeight: '500px' }}>
-          {currentRecipe.information &&
+          {recipes[recipeIndex].information &&
             <Stack direction={'row'}>
-              <InformationCard title={'Servings'} data={currentRecipe.information.servings} />
-              <InformationCard title={'Prep Time'} data={currentRecipe.information.prepTime} />
-              <InformationCard title={'Cooking Time'} data={currentRecipe.information.cookingTime} />
-              <InformationCard title={'Calories'} data={currentRecipe.information.calories} />
+              <InformationCard title={'Servings'} data={recipes[recipeIndex].information.servings} />
+              <InformationCard title={'Prep Time'} data={recipes[recipeIndex].information.prepTime} />
+              <InformationCard title={'Cooking Time'} data={recipes[recipeIndex].information.cookingTime} />
+              <InformationCard title={'Calories'} data={recipes[recipeIndex].information.calories} />
             </Stack>
           }
 
@@ -80,21 +77,21 @@ export default function RecipeDetail({ recipe, setDisplayContentBoard }) {
           </Tabs>
 
           {
-            currentRecipe.ingredients && tabValue === 0 &&
-            <IngredientsComponent ingredients={currentRecipe.ingredients} />
+            recipes[recipeIndex].ingredients && tabValue === 0 &&
+            <IngredientsComponent ingredients={recipes[recipeIndex].ingredients} />
           }
 
           {
-            currentRecipe.directions && tabValue === 1 &&
-            <DirectionsComponent key={tabValue} directions={currentRecipe.directions} />
+            recipes[recipeIndex].directions && tabValue === 1 &&
+            <DirectionsComponent key={tabValue} directions={recipes[recipeIndex].directions} />
           }
         </Grid>
         <Grid item xs={12} md={3} />
       </Grid>
 
       {/* All dialogs for the menu button */}
-      <EditRecipeDialog showEditRecipeDialog={showEditRecipeDialog} setShowEditRecipeDialog={setShowEditRecipeDialog} currentRecipe={currentRecipe} />
-      <DeleteRecipeDialog showDeleteRecipeDialog={showDeleteRecipeDialog} setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} recipeId={currentRecipe.recipeId} setDisplayContentBoard={setDisplayContentBoard} />
+      <EditRecipeDialog showEditRecipeDialog={showEditRecipeDialog} setShowEditRecipeDialog={setShowEditRecipeDialog} currentRecipe={recipes[recipeIndex]} />
+      <DeleteRecipeDialog showDeleteRecipeDialog={showDeleteRecipeDialog} setShowDeleteRecipeDialog={setShowDeleteRecipeDialog} recipeId={recipes[recipeIndex].recipeId} setDisplayContentBoard={setDisplayContentBoard} />
     </>
   )
 }

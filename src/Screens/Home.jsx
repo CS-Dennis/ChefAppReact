@@ -8,16 +8,17 @@ import SideMenu from '../Components/SideMenu'
 import { getRecipesByUserId } from '../Services/apis'
 import User from '../Data/UserConfig.json';
 import { AppContext } from '../App'
+import Loading from '../Components/Loading'
 
 export default function Home() {
-  const [recipes, setRecipes] = useState([]);
-
-  const { getRecipesFlag, setGetRecipesFlag } = useContext(AppContext);
-
+  const { getRecipesFlag, setGetRecipesFlag, recipes, setRecipes } = useContext(AppContext);
+  const [hideLoading, setHideLoading] = useState(true);
   const getRecipes = () => {
+    setHideLoading(false);
     getRecipesByUserId(User.id).then(response => {
-      console.log(response.data);
       setRecipes(response.data);
+    }).finally(() => {
+      setHideLoading(true);
     });
   }
 
@@ -40,6 +41,8 @@ export default function Home() {
         <Grid item xs={11}>
           <SearchBar />
 
+
+          <Loading hide={hideLoading} />
           <ContentBoard recipes={recipes} />
         </Grid>
       </Grid>

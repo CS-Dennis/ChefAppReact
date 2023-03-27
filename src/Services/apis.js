@@ -22,3 +22,7 @@ export const createRecipe = (recipe) => {
 export const deleteRecipe = ({ recipeId }) => {
   return axios.post(serverURL + "/api/recipes/delete", { recipeId });
 }
+
+export const updateRecipe = (recipe) => {
+  return axios.post(serverURL + "/api/recipes/update", recipe);
+}
