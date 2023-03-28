@@ -1,0 +1,6 @@
+services:
+  chef-ui:
+    image: chef-ui
+    ports:
+      - 80:80
+# docker compose up -d
