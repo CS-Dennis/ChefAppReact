@@ -34,3 +34,20 @@ body {
   background-color: #8d99ae;
   color: #fff;
 }
+
+.straightLine {
+  background-color: #2b2d42;
+  height: 1px;
+  width: 100%;
+  align-self: center;
+  margin: 0px 10px;
+}
+
+.sideMenuText {
+  align-self: center;
+  color: #2b2d42
+}
+
+.inputField {
+  margin: 10px 0;
+}
