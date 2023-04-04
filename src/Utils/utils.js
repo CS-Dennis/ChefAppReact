@@ -24,3 +24,9 @@ export const validateRecipeCreateOrEditForm = (recipeName, information, ingredin
     return true;
   }
 }
+
+// remove any list item that's an empty string
+export const cleanList = (inputList) => {
+  const cleanedList = inputList.filter(item => item.toString().trim() !== "");
+  return cleanedList;
+}
