@@ -13,6 +13,7 @@ import MockUser from '../Data/UserConfig.json';
 import Compressor from 'compressorjs';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../App';
+import { cleanList } from '../Utils/utils';
 
 export default function NewRecipeForm() {
   const navigate = useNavigate();
@@ -29,8 +30,7 @@ export default function NewRecipeForm() {
   const [recipeInformation, setRecipeInformation] = useState(initRecipeInformation);
   const [images, setImages] = useState([]);
 
-  const [ingredients, setIngredients] = useState([]);
-  const [hideNewIngredientInput, setHideNewIngredientInput] = useState(false);
+  const [ingredients, setIngredients] = useState([""]);
 
   const [hideLoading, setHideLoading] = useState(true);
 
@@ -38,70 +38,44 @@ export default function NewRecipeForm() {
     ingredients[index] = ingredient;
     setIngredients([...ingredients]);
 
-    //if the last input is now empty show add new ingredient input
-    if (ingredients[ingredients.length - 1].trim() !== "") {
-      setHideNewIngredientInput(false);
-    } else {
-      setHideNewIngredientInput(true);
+    if (ingredients[index].trim() !== "" && index === ingredients.length - 1) {
+      addIngredientInput();
     }
   }
 
   const addIngredientInput = () => {
     // add a new element in the list
     setIngredients([...ingredients, ""]);
-
-    // focuse on the last text field
-    setTimeout(() => {
-      document.getElementById('ingredient' + (ingredients.length)).focus();
-    }, 100);
-
-    // hide ifself
-    setHideNewIngredientInput(true);
   }
 
-  const removeEmptyIngredientInput = () => {
-    const numsOfIngredients = ingredients.length;
-    if (ingredients[numsOfIngredients - 1].trim() === "") {
+  const removeEmptyIngredientInput = (index) => {
+    if (ingredients[index].trim() === "" && index === ingredients.length - 2 && ingredients[index + 1].trim() === "") {
       ingredients.pop();
       setIngredients([...ingredients]);
-      setHideNewIngredientInput(false);
     }
   }
 
-  const [directions, setDirections] = useState([]);
-  const [hideNewDirectionInput, setHideNewDirectionInput] = useState(false);
+  const [directions, setDirections] = useState([""]);
+
 
   const updateDirections = (index, direction) => {
     directions[index] = direction;
     setDirections([...directions]);
 
-    //if the last input is now empty show add new direction input
-    if (directions[directions.length - 1].trim() !== "") {
-      setHideNewDirectionInput(false);
-    } else {
-      setHideNewDirectionInput(true);
+    if (directions[index].trim() !== "" && index === directions.length - 1) {
+      addDirectionInput();
     }
   }
 
   const addDirectionInput = () => {
     // add a new element in the list
     setDirections([...directions, ""]);
-
-    // focuse on the last text field
-    setTimeout(() => {
-      document.getElementById('direction' + (directions.length)).focus();
-    }, 100);
-
-    // hide ifself
-    setHideNewDirectionInput(true);
   }
 
-  const removeEmptyDirectionInput = () => {
-    const numsOfDirections = directions.length;
-    if (directions[numsOfDirections - 1].trim() === "") {
+  const removeEmptyDirectionInput = (index) => {
+    if (directions[index].trim() === "" && index === directions.length - 2 && directions[index + 1].trim() === "") {
       directions.pop();
       setDirections([...directions]);
-      setHideNewDirectionInput(false);
     }
   }
 
@@ -195,7 +169,7 @@ export default function NewRecipeForm() {
   }
 
   const validateForm = () => {
-    if (!recipeName || ingredients.length === 0 || directions.length === 0) {
+    if (!recipeName || cleanList(ingredients).length === 0 || cleanList(directions).length === 0) {
       return false;
     }
     return true;
@@ -206,11 +180,11 @@ export default function NewRecipeForm() {
       const imagesPayload = images.map((image, index) => {
         return { "sequence": index, "url": image }
       })
-      const ingredientsPayload = ingredients.map((ingredient, index) => {
+      const ingredientsPayload = cleanList(ingredients).map((ingredient, index) => {
         return { "sequence": index, "ingredient": ingredient }
       });
 
-      const directionsPayload = directions.map((direction, index) => {
+      const directionsPayload = cleanList(directions).map((direction, index) => {
         return { "sequence": index, "direction": direction }
       });
 
@@ -281,22 +255,20 @@ export default function NewRecipeForm() {
             <Box className="inputField"><TextField label='Calories (Optional)' variant='outlined' color='primary' type={'number'} value={recipeInformation.calories} onChange={(e) => setRecipeInformation({ ...recipeInformation, calories: e.target.value })} sx={{ width: '100%' }} /></Box>
 
             <Box><SectionTitleComponent title='Ingredients' /></Box>
-            {ingredients.length > 0 && ingredients.map((ingredient, index) =>
+            {ingredients.map((ingredient, index) =>
               <Box key={index} className="inputField">
-                {index === 0 ? <TextField required id={'ingredient' + index} onChange={(e) => { updateIngredients(index, e.target.value) }} onBlur={removeEmptyIngredientInput} label={'Ingredient ' + (index + 1)} variant='outlined' color='primary' value={ingredients[index]} sx={{ width: '100%' }} /> :
-                  <TextField id={'ingredient' + index} onChange={(e) => { updateIngredients(index, e.target.value) }} onBlur={removeEmptyIngredientInput} label={'Ingredient ' + (index + 1)} variant='outlined' color='primary' value={ingredients[index]} sx={{ width: '100%' }} />}
+                {index === 0 ? <TextField required id={'ingredient' + index} onChange={(e) => { updateIngredients(index, e.target.value) }} onBlur={() => removeEmptyIngredientInput(index)} label={'Ingredient ' + (index + 1)} variant='outlined' color='primary' value={ingredients[index]} sx={{ width: '100%' }} /> :
+                  <TextField id={'ingredient' + index} onChange={(e) => { updateIngredients(index, e.target.value) }} onBlur={() => removeEmptyIngredientInput(index)} label={'Ingredient ' + (index + 1)} variant='outlined' color='primary' value={ingredients[index]} sx={{ width: '100%' }} />}
               </Box>
             )}
-            {!hideNewIngredientInput && <Box className="inputField"><TextField onClick={addIngredientInput} label='New Ingredient' variant='outlined' color='primary' value={''} sx={{ width: '100%' }} /></Box>}
 
             <Box><SectionTitleComponent title='Directions' /></Box>
             {directions.length > 0 && directions.map((direction, index) =>
               <Box key={index} className="inputField">
-                {index === 0 ? <TextField required id={'direction' + index} onChange={(e) => { updateDirections(index, e.target.value) }} onBlur={removeEmptyDirectionInput} label={'Direction ' + (index + 1)} variant='outlined' color='primary' value={directions[index]} sx={{ width: '100%' }} /> :
-                  <TextField id={'direction' + index} onChange={(e) => { updateDirections(index, e.target.value) }} onBlur={removeEmptyDirectionInput} label={'Direction ' + (index + 1)} variant='outlined' color='primary' value={directions[index]} sx={{ width: '100%' }} />}
+                {index === 0 ? <TextField required id={'direction' + index} onChange={(e) => { updateDirections(index, e.target.value) }} onBlur={() => removeEmptyDirectionInput(index)} label={'Direction ' + (index + 1)} variant='outlined' color='primary' value={directions[index]} sx={{ width: '100%' }} /> :
+                  <TextField id={'direction' + index} onChange={(e) => { updateDirections(index, e.target.value) }} onBlur={() => removeEmptyDirectionInput(index)} label={'Direction ' + (index + 1)} variant='outlined' color='primary' value={directions[index]} sx={{ width: '100%' }} />}
               </Box>
             )}
-            {!hideNewDirectionInput && <Box className="inputField"><TextField onClick={addDirectionInput} label='New Direction' variant='outlined' color='primary' value={''} sx={{ width: '100%' }} /></Box>}
 
             <Box><Button variant='contained' onClick={submitRecipe}>Create</Button></Box>
           </Paper>
