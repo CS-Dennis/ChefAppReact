@@ -5,7 +5,7 @@ const dev = {
 
 const prod = {
   serverURL: "http://192.168.1.218:8080",
-  nginxURL: "http://192.168.1.218/uploads/"
+  nginxURL: "http://192.168.1.218:8081/uploads/"
 }
 
 export const serverURL = prod.serverURL;
